@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Evaluar numeros de mayor a menor</h1>
+    <label>Numero 1:</label>
+    <input type="text" id="n1">
+    <label>Numero 2:</label>
+    <input type="text" id="n2">
+    <label>Numero 3:</label>
+    <input type="text" id="n3">
+    <button>Ordenar</button>
+    <hr>
+
+    <h1 id="mayor"></h1>
+    <h1 id="inter"></h1>
+    <h1 id="menor"></h1>
+
+    <script>
+        $(document).ready(function(){
+
+            $("button").click(function(){
+
+            let uno=Number($("#n1").val());
+            let dos=Number($("#n2").val());
+            let tres=Number($("#n3").val());
+
+            console.log(uno + " " + dos + " "+ tres)
+            
+            let mayor, inter, menor;
+            
+            if(uno>=dos && uno>=tres){
+                mayor=uno;
+                if(dos>=tres){
+                    inter=dos;
+                    menor=tres;
+                }else{
+                    inter=tres;
+                    menor=dos;
+                }
+            }else if(tres>=dos && tres>=uno){
+                mayor=tres;
+                if(dos>=uno){
+                    inter=dos;
+                    menor=uno;
+                }else{
+                    inter=uno;
+                    menor=dos;
+                }
+            }else{
+            mayor=dos;
+                if(uno>=tres){
+                    inter=uno;
+                    menor=tres;
+                }else{
+                    inter=tres;
+                    menor=uno;
+                }
+            }
+            console.log(mayor + " " + inter + " "+ menor)
+            $("#mayor").text("El numero mas alto es: "+mayor)
+            $("#inter").text("El numero intermedio es: "+inter)
+            $("#menor").text("El numero mas bajo es: "+menor)
+            })
+        })
+    </script>
+</body>
+</html>
