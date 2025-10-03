@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<style>
+    body{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: whitesmoke;
+    }
+    #contenedor{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    button{
+        margin: 20px;
+        height: 80px;
+        width: 120px;
+        border: 2px black solid;
+        border-radius: 10px;
+        border-color: black;
+        background-color:white;
+        box-shadow: 5px 5px 5px 0;
+        font-size: 1.5em;
+        color: black;
+    }
+    h1{
+        margin: 20px;
+        color: black;
+        font-size: 3em;
+    }
+
+</style>
+<body>
+    <div id="contenedor">
+
+    </div>
+    <h1 id="suma"></h1>
+
+    <script>
+        $(document).ready(function(){
+            var random="";
+            for(let i=0; i<=10; i++){
+                random=Math.round(Math.random()* 100) +1;
+                var boton=$("<button>");
+                boton.text("Numero "+random);
+                boton.val(random);
+                $("#contenedor").append(boton);
+                boton.click(function(){
+                    var suma=Number($(this).val());
+                    var total=Number($("#suma").text())
+
+                    total+=suma;
+                    $("#suma").text(total);
+                })
+            }
+        })
+    </script>
+</body>
+</html>

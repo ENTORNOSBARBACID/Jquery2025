@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<style>
+    .image{
+        width: 90px; height: 90px;
+    }
+</style>
+<body>
+    <h1>Generar imágenes</h1>
+    <input type="range" id="rango" max="20" min="1" value="1">
+    <span id="valorrango"></span>
+    <div id="contenedor"></div>
+
+    <script>
+        $(document).ready(function(){
+            $("#rango").change(function(){
+                var valor=Number($("#rango").val());
+
+                $("#valorrango").text(valor);
+                $("#contenedor").html("");
+                console.log(valor);
+                for(let i=1; i<=valor; i++){
+                    console.log(i);
+                    var imagen=$("<img>", {"src": "../images/imagen1.jpg","class": "image"});
+                    //$("#contenedor").append(imagen);
+                    imagen.appendTo($("#contenedor"));
+                        imagen.mouseover(function(){
+                            $(this).attr("src", "../images/imagen2.jpg")    
+                        })
+
+                        imagen.mouseout(function(){
+                            $(this).attr("src", "../images/imagen1.jpg")
+                        })
+                }
+
+
+            })
+        })
+    </script>
+</body>
+</html>

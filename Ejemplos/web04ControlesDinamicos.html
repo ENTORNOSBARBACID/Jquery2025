@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=-, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Controles dinamicos</h1>
+    <label>Introduce Texto</label>
+    <input type="text" id="caja">
+    <button id="botoncaja">Generar control</button>
+    <hr>
+    <div id="contenedor"></div>
+    <script>
+        $(document).ready(function(){
+            $("#botoncaja").click(function(){
+                var parrafo = $("<p>", {"id": "parrafos", "style": "color:red; font-size: 3em"});
+                var texto = $("#caja").val();
+
+                parrafo.text(texto);
+                $("#contenedor").append(parrafo);
+                parrafo.click(function(){
+                    $(this).hide()
+                })
+            })
+            
+        })
+    </script>
+</body>
+</html>

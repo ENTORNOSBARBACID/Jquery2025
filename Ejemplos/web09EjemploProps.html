@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Ejemplo props checkbox</h1>
+    <label>Seleccione número de checkbox</label>
+    <input type="range" id="rango" min="1"  max="50" value="1">
+    <span id="valorrango"></span>
+    <h1 style="color:red" id="resultado">0</h1>
+    <hr>
+    <div id="contenedor"></div>
+
+    <script>
+        $(document).ready(function(){
+
+           
+            $("#rango").change(function(){
+                var rango=Number($("#rango").val());
+                $("#valorrango").text(rango);
+                $("#resultado").text("0")
+                $("#contenedor").text("");
+                for(let i=0; i<rango; i++){
+                    var random=parseInt(Math.random() * 500)+1;
+                    var checkbox=$("<input>", {"type":"checkbox", "value": random})
+                    var label=$("<label>", {"text": random});
+                    var br=$("<br>");
+                    $("#contenedor").append(br, label, checkbox);
+                        checkbox.change(function(){
+                    //     var resultado=parseInt($("#resultado").text())
+                    //     var valor=parseInt($(this).val());
+                    //     if($(this).prop("checked")){
+                    //         resultado+=valor;
+                    //     }else{
+                    //         resultado-=valor
+                    //     }
+                        var res=0;
+                        $("input[type=checkbox]:checked").each(function(){
+                            var valor=Number($(this).val());
+                            res+=valor
+                        })
+                         $("#resultado").text(res)
+
+                            
+                    })
+
+                }
+            })
+        })
+    </script>
+</body>
+</html>
