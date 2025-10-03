@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>XML Empleados</h1>
+    <button>Leer XML</button>
+    <hr>
+    <ul id="listaempleados">
+
+    </ul>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                console.log("Antes del servicio");
+                $.get("../documents/XML/empleados.xml", function(data){
+                    console.log("Dentro del servicio");
+                    var html ="";
+
+                    $(data).find("APELLIDO").each(function(){
+                            var li=$("<li>");
+                            
+                            li.html($(this).text());
+                            $("ul").append(li);
+                        })
+                })
+                console.log("Despues del servicio");
+                
+                
+            })
+        })
+    </script>
+</body>
+</html>

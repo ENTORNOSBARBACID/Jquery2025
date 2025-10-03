@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>DEPARTAMENTOS</h1>
+    <button id="botontabla">Generar tabla XML</button>
+    <table id="tabladepartamentos">
+        <thead>
+            <tr>
+                <th>NUMERO</th>
+                <th>NOMBRE</th>
+                <th>LOCALIDAD</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            $("#botontabla").click(function(){
+                $.get("../documents/XML/departamentos.xml", function(data){
+                    console.log("Leyendo...");
+                    var html="";
+                    console.log(data)
+                    $(data).find("DEPT").each(function(){
+                        var ndept=$(this).attr("DEPT_NO");
+                        var nom=$(this).find("DNOMBRE").first().text();
+                        var loc=$(this).find("LOC").first().text();
+                        html+="<tr>";
+                        html+="<td>"+ndept+"</td><td>"+nom+"</td><td>"+loc+"</td>";
+                        html+="</tr>";
+                        $("#tabladepartamentos tbody").html(html);
+                    })
+                })
+            })
+        })
+    </script>
+</body>
+</html>

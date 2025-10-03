@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<style>
+    #content{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+</style>
+<body>
+   
+    <h1>FILTROS XML</h1>
+    <div id="content">
+        <div>
+            <label>Introduzca ID</label>
+            <input type="text" id="buscarid">
+            <button id="botonid">Buscar el id</button>
+            <ul id="listaId"></ul>
+        </div>
+        <div>
+            <label>Introduzca departamento</label>
+            <input type="text" id="buscardept">
+            <button id="botondept">Buscar por departamento</button>
+            <ul id="listaDept"></ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+           $("#botonid").click(function(){
+            $.get("../documents/XML/departamentos.xml", function(data){
+                
+                    console.log("Leyendo...")
+                    var html="";
+                    var dept=$("#buscarid").val();
+                    var filtro= "DEPT[DEPT_NO=" + dept + "]";
+                    var nodo=$(data).find(filtro).first();
+                    var nom= $(nodo).find("DNOMBRE").first().text();
+                    var loc= $(nodo).find("LOC").first().text();
+                    console.log(nom, loc);
+                        html+="<li>";
+                        html+=dept+" | "+nom+" | "+loc;
+                        html+="</tr>";
+                        $("#listaId").html(html);
+            })
+            })
+            
+
+            $("#botondept").click(function(){
+            $.get("../documents/XML/departamentos.xml", function(data){
+                
+                    console.log("Leyendo...")
+                    var html="";
+                    var dept=$("#buscardept").val();
+                    var filtro= "LOC:contains("+dept+")";
+                    $(data).find(filtro).each(function(){
+                        var cosa=$(this).text()
+                            html+="<li>";
+                            html+=dept;
+                            html+="</tr>";
+                        
+                        $("#listaDept").html(html);
+                    });
+                    if(html==""){
+                        html="HOLA";
+                        $("#listaDept").html(html);
+                    }
+                    
+            })
+            })
+        })
+    </script>
+</body>
+</html>
