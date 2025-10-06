@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Tabla en AJAX</h1>
+<button id="generar">Generar tabla de informacion</button>
+    <table id="tablaAjax">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    
+    <script>
+        
+        let url="https://apicruddepartamentosxml.azurewebsites.net";
+        $(document).ready(function(){
+            
+
+            $("#generar").click(function(){
+                loadDepartamentos();
+            })
+        })
+
+        function loadDepartamentos(){
+            var request="/api/Departamentos";
+            var html="";
+
+            $.get(url+request, function(data){
+                console.log("Leyendo...")
+                $(data).find("Departamento").each(function(){
+                    var id=$(this).find("IdDepartamento").text();
+                    var nombre=$(this).find("Nombre").text();
+                    var localidad=$(this).find("Localidad").text();
+
+                    html+="<tr><td>"+id+"</td><td>"+nombre+"</td><td>"+localidad+"</td></tr>";
+
+                })
+                $("#tablaAjax tbody").html(html);
+            })
+        }
+    </script>
+</body>
+</html>
