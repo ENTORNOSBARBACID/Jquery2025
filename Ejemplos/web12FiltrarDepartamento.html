@@ -61,14 +61,18 @@
                     var filtro= "LOC:contains("+dept+")";
                     $(data).find(filtro).each(function(){
                         var cosa=$(this).text()
+                        var info=$(this).parent();
+                        console.log(info)   
+                        var id=info.attr("DEPT_NO");
+                        var nombre=info.find("DNOMBRE").first().text();
                             html+="<li>";
-                            html+=dept;
+                            html+=id + " | " + nombre + " | " + dept;
                             html+="</tr>";
                         
                         $("#listaDept").html(html);
                     });
-                    if(html==""){
-                        html="HOLA";
+                    if($(data).find(filtro).length == 0){
+                        html="No se encuentran el/los departamentos";
                         $("#listaDept").html(html);
                     }
                     

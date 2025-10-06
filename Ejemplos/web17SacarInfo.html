@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    
+    <h1>Clientes XML</h1>
+    <div id="contenedor"></div>
+    <hr>
+    <div id="c2"></div>
+    <script>
+        $(document).ready(function(){
+            let url="https://apiclientesxml.azurewebsites.net/"
+            let request="api/Clientes"
+            
+            $.get(url+request, function(data){
+
+                $(data).find("Cliente").each(function(){
+                    var id=$(this).find("IdCliente").text();
+                    var nombre=$(this).find("Nombre").text();
+
+                    var boton=$("<button>", {"value": id, "text": nombre, "data-id": id});
+                    $("#contenedor").append(boton);
+
+                    boton.click(function(){
+                    //let solId="/"+$(this).val();
+                    let solId="/"+$(this).data("id");
+                    $.get(url+request+solId, function(data){
+                        var email=$(data).find("Email").text();
+                        var pagina=$(data).find("PaginaWeb").text();
+                        var imagen=$(data).find("Imagen").text();
+
+                        $("#c2").html("<h1>Email: "+email+"</h1><h1>"+pagina+"</h1>"+"<img src='"+imagen+"' style= width:300px; height:200px;>")
+                    })
+                })
+                
+                // $("button").click(function(){
+                // let solId="/"+$(this).val();
+                // //let solId="/"+$(this).data("id");
+                // console.log("hola")
+                
+
+                // $.get(url+request+solId, function(data){
+                //     var email=$(data).find("Email").text();
+                //     var pagina=$(data).find("PaginaWeb").text();
+                //     var imagen=$(data).find("Imagen").text();
+
+                //     $("#c2").html("<h1>Email: "+email+"</h1><h1>"+pagina+"</h1>"+"<img src='"+imagen+"' style= width:300px; height:200px;>")
+                // })
+            })
+            })
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <h1>Coger datos de una API</h1>
+    <button id="generar">Generar lista API</button>
+    <ul id="listaAPI">
+
+    </ul>
+
+    <script>
+        $(document).ready(function(){
+            $("#generar").click(function(){
+                let url="https://apicruddepartamentosxml.azurewebsites.net/";
+                let request ="api/departamentos";
+                var html="";
+                $.get(url + request, function(data){
+                    console.log("Leyendo...")
+                    $(data).find("Departamento").each(function(){
+                        var cosa=$(this);                        var id= cosa.find("IdDepartamento").first().text();
+                        var nombre = cosa.find("Nombre").first().text();
+                        var Localidad= cosa.find("Localidad").first().text();
+
+                        html+="<li>" + id + " | " + nombre + " | " + Localidad +"</li>";
+                        
+                    })
+                    $("#listaAPI").html(html)
+                })
+            })
+        })
+    </script>
+    
+</body>
+</html>
