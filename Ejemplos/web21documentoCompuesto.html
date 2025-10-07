@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Clientes JSON</h1>
+    <button id="botonload">Cargar documento</button>
+    <ul id="clientes"></ul>
+
+    <script>
+        $(document).ready(function(){
+            $("#botonload").click(function(){
+                var html="";
+                $.getJSON("../documents/JSON/clientes.json", function(data){
+                    console.log(data);
+                    $.each(data.clientes, function(i, clientes){
+                            html+="<li>"+ clientes.nombre + ", cliente numero "+(Number(i)+1)+"</li>";
+                    })
+                    $("#clientes").html(html);
+                })
+            })
+        })
+    </script>
+</body>
+</html>

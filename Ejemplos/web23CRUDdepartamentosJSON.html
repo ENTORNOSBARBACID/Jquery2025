@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<style>
+/* ======== Estilos generales ======== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    margin: 40px;
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+/* ======== Encabezado ======== */
+h1 {
+    text-align: center;
+    color: #0078d7;
+    margin-bottom: 30px;
+}
+
+/* ======== Formulario ======== */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #444;
+}
+
+input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0078d7;
+    outline: none;
+}
+
+/* Contenedor del formulario */
+form, .form-container {
+    background-color: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ======== Botones ======== */
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-top: 15px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: rgb(1, 71, 1);
+    transform: translateY(-1px);
+}
+
+button#del {
+    background-color: #d9534f;
+}
+
+button#del:hover {
+    background-color: #c9302c;
+}
+
+button#mod {
+    background-color: #f0ad4e;
+}
+
+button#mod:hover {
+    background-color: #ec971f;
+}
+
+/* ======== Tabla ======== */
+#tablajson {
+    width: 100%;
+    height: 300px;
+    border-collapse: collapse;
+    font-size: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+#tablajson thead {
+    background-color: #0078d7;
+    color: white;
+    text-align: left;
+}
+
+#tablajson th, #tablajson td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#tablajson tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tablajson tbody tr:hover {
+    background-color: #e6f0ff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+</style>
+<body>
+    <div>
+    <h1>Tabla en JSON
+    </h1>
+    <label>Id departamento</label>
+    <input type="text" id="cajaid">
+    <label>Nombre</label>
+    <input type="text" id="cajanombre">
+    <label>Localidad</label>
+    <input type="text" id="cajaloc"><br>
+    <button id="ins">Insertar</button>
+    <button id="mod">Modificar</button>
+    <button id="del">Borrar</button>
+    </div>
+    <div>
+    <table id="tablajson">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    </div>
+    <script>
+        // let url= "https://apicruddepartamentoscore.azurewebsites.net/"
+        let url="https://apicruddepartamentospgs.azurewebsites.net/";
+        $(document).ready(function(){
+            cargarDepartamentos();
+
+            $("#ins").click(function(){
+                var num=$("#cajaid").val();
+                var nom=$("#cajanombre").val();
+                var loc=$("#cajaloc").val();
+                var request= "api/Departamentos";
+                var dept=new Object();
+                dept.numero=Number(num);
+                dept.nombre=nom;
+                dept.localidad=loc;
+                var dataJSON = JSON.stringify(dept);
+                console.log(dataJSON);
+
+                $.ajax({
+                    url:url+request,
+                    type:"POST",
+                    contentType:"application/json",
+                    data:dataJSON,
+                    success: function(){
+                        console.log("INSERTADO");
+                        cargarDepartamentos();
+                    }
+
+                })
+            })
+
+            $("#mod").click(function(){
+                var num=$("#cajaid").val();
+                var nom=$("#cajanombre").val();
+                var loc=$("#cajaloc").val();
+                var request= "api/Departamentos";
+
+                var dept=new Object();
+                dept.numero=Number(num);
+                dept.nombre=nom;
+                dept.localidad=loc;
+                var dataJSON = JSON.stringify(dept);
+                console.log(dataJSON);
+
+                $.ajax({
+                    url:url+request,
+                    type:"PUT",
+                    contentType:"application/json",
+                    data:dataJSON,
+                    success:function(){
+                        console.log("MODIFICADO");
+                        cargarDepartamentos();
+                    }
+                })
+            })
+
+            $("#del").click(function(){
+            var num=$("#cajaid").val();
+            var request="api/departamentos/"+num
+            $.ajax({
+                url:url+request,
+                type:"DELETE",
+                success:function(){
+                    console.log("ELIMINADO");
+                    cargarDepartamentos();
+                }
+            })
+
+            })
+        })
+        
+        function cargarDepartamentos(){
+            var request="webresources/departamentos"
+            $.getJSON(url+request, function(data){
+                var html="";
+                console.log("Leyendo...");
+                $.each(data, function(i, dept){
+
+                    html+="<tr><td>"+dept.numero+"</td><td>"+dept.nombre+"</td><td>"+dept.localidad+"</td></tr>";
+
+                })
+                $("#tablajson tbody").html(html);
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Leer Jugadores JSON</h1>
+
+    <select id="seleccionarJugador">
+
+    </select>
+    <table id="tablajugadores">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nombre</th>
+                <th>Posicion</th>
+                <th>Edad</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: "../documents/JSON/jugadores.json",
+                type: "GET",
+                contentType: "json",
+                dataType: "json",
+                success: function(data){
+                    console.log("Leyendo...");
+                    html="<option value= '-1' >Selecciona Jugador</option>";
+                    $.each(data.jugadores, function(i, jugador){
+                        html+="<option value='"+jugador.nombre+"'>"+jugador.nombre+"</option>"
+                        // html+="<tr>";
+                        // html+="<td>"+jugador.numero+"</td>";
+                        // html+="<td>"+jugador.nombre+"</td>";
+                        // html+="<td>"+jugador.posicion+"</td>";
+                        // html+="<td>"+jugador.edad+"</td>";
+                        // html+="<td><img src='"+jugador.imagen+"' style='width: 150px; height: 1 00px;'></td>";
+                        
+                    })
+                    // $("#tablajugadores tbody").html(html);
+                    $("#seleccionarJugador").html(html);
+                }
+            })
+            $("#seleccionarJugador").change(function(){
+
+                var name=$("#seleccionarJugador").val();
+                
+                $.getJSON("../documents/JSON/jugadores.json", function(data){
+                    var html="";
+                    var index= $("#seleccionarJugador").prop("selectedIndex");
+                    console.log(index)
+                    let jugador=data.jugadores[index-1];
+                    html+="<tr>";
+                    html+="<td style: 'margin: 5px' >"+jugador.numero+"</td>";
+                    html+="<td style: 'margin: 5px'>"+jugador.nombre+"</td>";
+                    html+="<td style: 'margin: 5px'>"+jugador.posicion+"</td>";
+                    html+="<td style: 'margin: 5px'>"+jugador.edad+"</td>";
+                    html+="<td style: 'margin: 5px'><img src='"+jugador.imagen+"' style='width: 150px; height: 1 00px;'></td>";
+
+                    // $.each(data.jugadores, function(index, jugador){
+                    //     var nombre=jugador.nombre;
+                    //     if(nombre == name){
+                    //         html+="<tr>";
+                    //         html+="<td style: 'margin: 5px' >"+jugador.numero+"</td>";
+                    //         html+="<td style: 'margin: 5px'>"+jugador.nombre+"</td>";
+                    //         html+="<td style: 'margin: 5px'>"+jugador.posicion+"</td>";
+                    //         html+="<td style: 'margin: 5px'>"+jugador.edad+"</td>";
+                    //         html+="<td style: 'margin: 5px'><img src='"+jugador.imagen+"' style='width: 150px; height: 1 00px;'></td>";
+                    //     }
+                    // })
+                    $("#tablajugadores tbody").html(html);
+                })
+            })
+        })
+    </script>
+</body>
+</html>

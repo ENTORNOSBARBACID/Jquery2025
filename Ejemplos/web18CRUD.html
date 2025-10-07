@@ -8,7 +8,16 @@
 </head>
 <body>
     <h1>Tabla en AJAX</h1>
-<button id="generar">Generar tabla de informacion</button>
+    <label>Id departamento</label>
+    <input type="text" id="cajaid">
+    <label>Nombre</label>
+    <input type="text" id="cajanombre">
+    <label>Localidad</label>
+    <input type="text" id="cajaloc">
+    <button id="ins">Insertar</button>
+    <button id="mod">Modificar</button>
+    <button id="del">Borrar</button>
+
     <table id="tablaAjax">
         <thead>
             <tr>
@@ -26,12 +35,73 @@
         
         let url="https://apicruddepartamentosxml.azurewebsites.net";
         $(document).ready(function(){
-            
+                
+            loadDepartamentos();
 
-            $("#generar").click(function(){
-                loadDepartamentos();
+            $("#ins").click(function(){
+                let id=$("#cajaid").val();
+                let nombre=$("#cajanombre").val();
+                let localidad=$("#cajaloc").val();
+                let dataXML=generarDocumentoXML(id, nombre, localidad);
+                
+                let request="/api/Departamentos";
+                $.ajax({
+                    url: url+request,
+                    type: "POST",
+                    contentType: "text/xml",
+                    data: dataXML,
+                    success: function(){
+                        console.log("Insertado");
+                        loadDepartamentos();
+                    }
+                })
+            })
+
+            $("#mod").click(function(){
+                let id=$("#cajaid").val();
+                let nombre=$("#cajanombre").val();
+                let localidad=$("#cajaloc").val();
+                let dataXML=generarDocumentoXML(id, nombre, localidad);
+                let request="/api/departamentos";
+                $.ajax({
+                    url: url+request,
+                    type: "PUT",
+                    contentType: "text/xml",
+                    data: dataXML,
+                    success: function(){
+                        console.log("MODIFICADO");
+                        loadDepartamentos();
+                    }
+                })
+                
+            })
+
+            $("#del").click(function(){
+                let id=$("#cajaid").val();
+                let request = "/api/departamentos/" +id;
+
+                $.ajax({
+                    url: url+request,
+                    type: "DELETE",
+                    success: function(){
+                        console.log("ELIMINADO");
+                        loadDepartamentos();
+                    }
+                })
             })
         })
+        function generarDocumentoXML(id, nombre, localidad){
+
+                dataXML="";
+            
+                dataXML+="<Departamento>";
+                dataXML+="<IdDepartamento>"+id+"</IdDepartamento>";
+                dataXML+="<Nombre>"+nombre+"</Nombre>";
+                dataXML+="<Localidad>"+localidad+"</Localidad>";
+                dataXML+="</Departamento>";
+
+                return dataXML;
+        }
 
         function loadDepartamentos(){
             var request="/api/Departamentos";
