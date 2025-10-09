@@ -162,7 +162,6 @@
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item"> <a class="nav-link active" aria-current="page" href="Home.html">Home</a> </li>
                     <li class="nav-item"> <a class="nav-link" href="Create.html">New hospital</a> </li>
-                    <li class="nav-item"> <a class="nav-link disabled" aria-disabled="true">Disabled</a> </li>
                 </ul>
                 <form class="d-flex" role="search"> <input class="form-control me-2" type="search" placeholder="Search"
                         aria-label="Search"> <button class="btn btn-outline-success" type="submit">Search</button>
@@ -199,16 +198,35 @@
                 type:"GET",
                 success: function(data){
                     console.log("leyendo...");
-                    var html="";
-                    
-                    $.each(data, function(i, hos){                  
-                        html+="<tr><td>"+hos.nombre+"</td>";
-                        html+="<td>"+hos.direccion+"</td>";
-                        html+="<td><a href='"+urlPage+"Detail.html?idhospital="+hos.idhospital+"'>Detalles</a><a href='"+urlPage+"Edit.html?idhospital="+hos.idhospital+"'>Editar</a></td></tr>";
-                        $("#tablaHospitales tbody").html(html)
-                    })
-                }
-            })
+                    var html="";                    
+                        $.each(data, function(i, hos){                  
+                            html+="<tr><td>"+hos.nombre+"</td>";
+                            html+="<td>"+hos.direccion+"</td>";
+                            html+="<td><a class='btn btn-info' href='"+urlPage+"Detail.html?idhospital="+hos.idhospital+
+                                "'>Detalles</a> <a class='btn btn-success' href='"+urlPage+"Edit.html?idhospital="+hos.idhospital+
+                                "'>Editar</a> <a href='#'class='delete btn btn-danger' data-id='"+hos.idhospital+
+                                "'>Borrar</a></td></tr>";
+
+                            $("#tablaHospitales tbody").html(html)
+
+                            $(".delete").click(function(){
+                            var id=$(this).data("id");
+                            console.log(id)
+                            var requestDelete="webresources/hospitales/delete/"+id
+                                $.ajax({
+                                    url: url+requestDelete,
+                                    type: "DELETE",
+                                    success:function(){
+                                        console.log("ELIMINADO: "+id);
+                                        window.location.href="Home.html";
+                                    }
+                                })
+                            })  
+                        })
+                                          
+                    }
+                })
+            
 
 
         })

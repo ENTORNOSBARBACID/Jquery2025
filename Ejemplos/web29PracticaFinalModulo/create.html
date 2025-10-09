@@ -7,12 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Astro v5.13.2">
-    <title>Fixed top navbar example · Bootstrap v5.3</title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbar-fixed/">
+    <title>Navbar Template · Bootstrap v5.3</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars-offcanvas/">
     <script src="../../js/color-modes.js"></script>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <meta name="theme-color" content="#712cf9">
-    <link href="../../css/navbar-fixed.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB">
+    <link href="navbars-offcanvas.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -153,101 +153,92 @@
                     </svg> </button> </li>
         </ul>
     </div>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid"> <a class="navbar-brand" href="#">CRUD hospitales</a> <button class="navbar-toggler"
-                type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
-                aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item"> <a class="nav-link active" aria-current="page" href="Home.html">Home</a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="Create.html">New hospital</a> </li>
-                    <li class="nav-item"> <a class="nav-link disabled" aria-disabled="true">Disabled</a> </li>
-                </ul>
-                <form class="d-flex" role="search"> <input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"> <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+    <main>
+        
+        <nav class="navbar bg-body-tertiary" aria-label="Light offcanvas navbar">
+            <div class="container-fluid"> <a class="navbar-brand" href="#">Light offcanvas navbar</a> <button
+                    class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+                    aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+                    aria-labelledby="offcanvasNavbarLightLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Offcanvas</h5> <button type="button"
+                            class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="#">Home</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
+                            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search"> <input class="form-control me-2" type="search"
+                                placeholder="Search" aria-label="Search"> <button class="btn btn-outline-success"
+                                type="submit">Search</button> </form>
+                    </div>
+                </div>
             </div>
+        </nav>
+        
+        <div class="container my-5">
+            <h1>Crear doctor: </h1>
+            <label>Id del Hospital: </label>
+            <input type="text" class="form-control" id="cajaidHospital"></br>
+            <label>Apellido del doctor: </label>
+            <input type="text" class="form-control" id="cajaapellido"></br>
+            <label>Especialidad del doctor: </label>
+            <input type="text" class="form-control" id="cajaespecialidad"></br>
+            <label>Salario del doctor: </label>
+            <input type="text" class="form-control" id="cajasalario"></br>
+            <button id="aceptar" class="btn btn-success">Aceptar</button>
         </div>
-    </nav>
-    <main class="container">
-        <div class="bg-body-tertiary p-5 rounded">
-            <h1>Create</h1>
-            <label>Id Hospital</label>
-            <input type="text" id="cajaid" class="form-control" readonly></br>
-            <label>Nombre</label>
-            <input type="text" id="cajanombre" class="form-control"></br>
-            <label>Direccion</label>
-            <input type="text" id="cajadireccion" class="form-control"></br>
-            <label>Telefono</label>
-            <input type="text" id="cajatelefono" class="form-control"></br>
-            <label>Camas</label>
-            <input type="text" id="cajacamas" class="form-control"></br>
-            <button id="aceptar" class="btn btn-primary">Aceptar</button>
-        </div>
-        <h1 id="mensaje" class="danger"></h1>
     </main>
-    <script src="../../js/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        class="astro-vvvwv3sm"></script>
+    <script src="../../js/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../js/jquery-3.7.1.js"></script>
     <script>
-        let urlPage="http://127.0.0.1:5500/Ejemplos/web28PracticaFinalCRUD/";
-        let url="https://apicrudhospital.azurewebsites.net/";
+        let url="https://apicruddoctores.azurewebsites.net/"
         $(document).ready(function(){
-            let request= "webresources/hospitales/put";
-            let requestGet="webresources/hospitales"
-            $("#mensaje").html("");
-            var params=new window.URLSearchParams(window.location.search);
-            var idHospital=params.get("idhospital");
-            $.getJSON(url+requestGet, function(data){
-                $.each(data, function(i, key){
-                    if(key.idhospital==idHospital){
-                        console.log("hola");
-                        $("#cajaid").val(idHospital);
-                        $("#cajanombre").val(key.nombre);
-                        $("#cajatelefono").val(key.telefono);
-                        $("#cajacamas").val(key.camas);
-                        $("#cajadireccion").val(key.direccion);
-                        
-                    }
-
-                })
-            })
+            var request="api/doctores   "
             $("#aceptar").click(function(){
+                console.log("hola")
+                var idHospital=Number($("#cajaidHospital").val());
+                var apellido=$("#cajaapellido").val();
+                var especialidad=$("#cajaespecialidad").val();
+                var salario=Number($("#cajasalario").val());
 
-                var id=Number($("#cajaid").val());
-                var nombre=$("#cajanombre").val();
-                var telefono=$("#cajatelefono").val();
-                var camas=Number($("#cajacamas").val());
-                var direccion=$("#cajadireccion").val();
+                var doctor= new Object();
 
-                var hospital = new Object();
+                doctor.idHospital=idHospital;
+                doctor.apellido=apellido;
+                doctor.especialidad=especialidad;
+                doctor.salario=salario;
 
-                hospital.idhospital=id;
-                hospital.nombre=nombre;
-                hospital.direccion=direccion;
-                hospital.telefono=telefono;
-                hospital.camas=camas;
-
-                var dataJSON = JSON.stringify(hospital);
+                var dataJSON=JSON.stringify(doctor);
                 console.log(dataJSON);
 
                 $.ajax({
                     url: url+request,
-                    type:"PUT",
-                    contentType:"application/json",
+                    type: "POST",
+                    contentType: "application/json",
                     data:dataJSON,
                     success: function(){
-                        console.log("MODIFICADO");
-                        //$("#mensaje").html("El hospital se ha modificado correctamente");
-                        window.location.href= "Detail.html?idhospital="+idHospital;
+                        console.log("INSERTADO");
+                        window.location.href="home.html";
                     }
                 })
             })
-                
-
-
         })
     </script>
 </body>
