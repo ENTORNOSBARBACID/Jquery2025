@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <ul id="head">
+        <li><a href="home.html ">Home</a></li>
+    </ul>
+<h1 style="color: blue">HOSPITALES:</h1>
+    <table id="tablaHospitales">
+        <thead>
+            <tr>
+                <th>Id Hospital</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Telefonos</th>
+                <th>Camas</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <h1 style="color: red">DOCTORES:</h1>
+    <table id="tablaDoctores">
+        <thead>
+            <tr>
+                <th>Id Doctor</th>
+                <th>Id Hospital</th>
+                <th>Nombre</th>
+                <th>Especialidad</th>
+                <th>Salario</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    
+<script>
+    let url="https://apicrudhospital.azurewebsites.net/";
+    let urlDoctores="https://apicruddoctores.azurewebsites.net/";
+    $(document).ready(function(){
+        var request="webresources/hospitales";
+        var requestDoctores="api/doctores"
+        
+        $.ajax({
+            url:url+request,
+            type:"GET",
+            contentType:"application/json",
+            success: function(data){
+                var html="";
+                $.each(data,function(index, hospital){
+                    html+="<tr>"
+                    html+="<td>"+ hospital.idhospital +"</td>"
+                    html+="<td>"+ hospital.nombre +"</td>"
+                    html+="<td>"+ hospital.direccion +"</td>"
+                    html+="<td>"+ hospital.telefono +"</td>"
+                    html+="<td>"+ hospital.camas +"</td>"
+                    html+="</tr>"
+                })
+                console.log(html)
+                $("#tablaHospitales tbody").html(html)
+            }
+        })
+        
+        $.ajax({
+            url: urlDoctores + requestDoctores,
+            type:"GET",
+            contentType:"application/json",
+            success:function(data){
+                html="";
+                console.log(data)
+                $.each(data, function(index, doctor){
+                    html+="<tr>"
+                    html+="<td>"+ doctor.idDoctor +"</td>"
+                    html+="<td>"+ doctor.idHospital +"</td>"
+                    html+="<td>"+ doctor.apellido +"</td>"
+                    html+="<td>"+ doctor.especialidad +"</td>"
+                    html+="<td>"+ doctor.salario +"</td>"
+                    html+="<td><a href='edit.html?idDoctor="+doctor.idDoctor+"'><button>Editar doctor</button</a></td>"
+                    html+="</tr>"
+                })
+                $("#tablaDoctores tbody").html(html)
+            }
+        })
+    })
+</script>
+</body>
+</html>

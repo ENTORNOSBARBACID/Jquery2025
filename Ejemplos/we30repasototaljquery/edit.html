@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <form>
+        <label>ID:</label>
+        <input type="text" id="cajaIDdoctor" readonly><br>
+        <label>ID hospital:</label>
+        <input type="text" id="cajaIDhospital"><br>
+        <label>Apellido</label>
+        <input type="text" id="cajapellido"><br>
+        <label>Especialidad</label>
+        <input type="text" id="cajaespecialidad"><br>
+        <label>Salario</label>
+        <input type="text" id="cajasalario"><br>    
+        <button id="gaurdarCambios">Guardar cambios</button>
+   </form>
+
+    <script>
+        let urlDoctores="https://apicruddoctores.azurewebsites.net/";
+        var params=new window.URLSearchParams(window.location.search);
+        var idDoctor=params.get("idDoctor");
+        $(document).ready(function(){
+            var request="api/doctores";
+            $.ajax({
+                url:urlDoctores + request,
+                type:"GET",
+                contentType:"application/json",
+                success:function(data){
+                    $.each(data, function(index, doctor){
+                        if(doctor.idDoctor==idDoctor){
+                            $("#cajaIDdoctor").val(doctor.idDoctor);
+                            $("#cajaIDhospital").val(doctor.idHospital);
+                            $("#cajapellido").val(doctor.apellido);
+                            $("#cajaespecialidad").val(doctor.especialidad);
+                            $("#cajasalario").val(doctor.salario);
+                        }
+                    })
+
+                    $("#guardarCambios").click(function(){
+
+                        requestEdit="/api/Doctores"
+
+                        var idHospital=$("#cajaIDhospital").val(doctor.idHospital);
+                        var apellido=$("#cajapellido").val(doctor.apellido);
+                        var especialidad=$("#cajaespecialidad").val(doctor.especialidad);
+                        var salario=$("#cajasalario").val(doctor.salario);
+
+                        var doctorEdit=new Objets();
+
+                        doctorEdit.idDoctor=Number(idDoctor);
+                        doctorEdit.idHospital=Number(idHospital);
+                        doctorEdit.apellido=apellido
+                        doctorEdit.especialidad=especialidad;
+                        doctorEdit.salario=Number(salario);
+
+                        var dataJSON=JSON.stringify(doctorEdit);
+
+                        $.ajax({
+                            url:urlDoctor + requestEdit,
+                            type:"PUT",
+                            contentType:"application/json",
+                            dataType:"application/json",
+                            data:dataJSON,
+                            success: function(){
+                                console.log("Doctor editado");
+                                window.location.href="home.html"
+                            }
+                        })
+                    })
+                }
+            })
+        })
+    </script>
+    
+</body>
+</html>
