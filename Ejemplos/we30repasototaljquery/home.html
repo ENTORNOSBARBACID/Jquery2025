@@ -9,7 +9,12 @@
 <body>
     <ul id="head">
         <li><a href="home.html ">Home</a></li>
+        <li><a href="create.html ">Create Doctor</a></li>
     </ul>
+<label>Buscar por ID</label>
+<input type="text" id="cajaid">
+<button id="search">Buscar</button>
+<div id="contenedor"></div>
 <h1 style="color: blue">HOSPITALES:</h1>
     <table id="tablaHospitales">
         <thead>
@@ -64,7 +69,6 @@
                     html+="<td>"+ hospital.camas +"</td>"
                     html+="</tr>"
                 })
-                console.log(html)
                 $("#tablaHospitales tbody").html(html)
             }
         })
@@ -83,12 +87,51 @@
                     html+="<td>"+ doctor.apellido +"</td>"
                     html+="<td>"+ doctor.especialidad +"</td>"
                     html+="<td>"+ doctor.salario +"</td>"
-                    html+="<td><a href='edit.html?idDoctor="+doctor.idDoctor+"'><button>Editar doctor</button</a></td>"
+                    html+="<td><a href='edit.html?idDoctor="+doctor.idDoctor+"'><button>Editar doctor</button></a><button class='delete' data-id='"+doctor.idDoctor+"'>Eliminar doctor</button></td>"
                     html+="</tr>"
                 })
                 $("#tablaDoctores tbody").html(html)
+                $(".delete").click(function(){
+                    var id=$(this).data("id");
+                    console.log("entro")
+                    var requestDelete="api/doctores/"+id;
+                    $.ajax({
+                        url:urlDoctores + requestDelete,
+                        type: "DELETE",
+                        success: function(){
+                            console.log("Eliminado")
+                            location.reload()
+                        }
+                    })
+        })
             }
         })
+
+        $("#search").click(function(){
+            var id=$("#cajaid").val();
+            request="api/doctores";
+            html="";
+            $.getJSON(urlDoctores+request, function(data){
+                $.each(data, function(index, doctor){
+                    if(doctor.idDoctor == id){
+                        html+="<ul>"
+                        html+="<li>"+ doctor.idDoctor +"</li>"
+                        html+="<li>"+ doctor.idHospital +"</li>"
+                        html+="<li>"+ doctor.apellido +"</li>"
+                        html+="<li>"+ doctor.especialidad +"</li>"
+                        html+="<li>"+ doctor.salario +"</li>"
+                        html+="</ul>"
+                    }
+
+                })
+                if(html == ""){
+                    html+="<h3>No se ha encontrado al doctor</h3>";
+                }
+                $("#contenedor").html(html)
+            })
+        })
+
+        
     })
 </script>
 </body>

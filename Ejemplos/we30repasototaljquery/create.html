@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/jquery-3.7.1.js"></script>
+</head>
+<body>
+        <label>ID Doctor:</label>
+        <input type="text" id="cajaIDdoctor"><br>
+        <label>ID hospital:</label>
+        <input type="text" id="cajaIDhospital"><br>
+        <label>Apellido</label>
+        <input type="text" id="cajapellido"><br>
+        <label>Especialidad</label>
+        <input type="text" id="cajaespecialidad"><br>
+        <label>Salario</label>
+        <input type="text" id="cajasalario"><br>    
+        <button id="guardarCambios">Guardar cambios</button>
+
+    <script>
+        let urlDoctores="https://apicruddoctores.azurewebsites.net/";
+        
+        $(document).ready(function(){
+            var request="api/doctores";
+            $("#guardarCambios").click(function(){
+                var idDoctor=$("#cajaIDdoctor").val();
+                var idHospital=$("#cajaIDhospital").val();
+                var apellido=$("#cajapellido").val();
+                var especialidad=$("#cajaespecialidad").val();
+                var salario=$("#cajasalario").val();
+
+                var doctor= new Object();
+
+                    doctor.idDoctor=Number(idDoctor);
+                    doctor.idHospital=Number(idHospital);
+                    doctor.apellido=apellido;
+                    doctor.especialidad=especialidad;
+                    doctor.salario=Number(salario);
+
+                    var dataJSON=JSON.stringify(doctor);    
+                    console.log(dataJSON);
+
+                $.ajax({
+                    url:urlDoctores + request,
+                    type:"POST",
+                    contentType:"application/json",
+                    data: dataJSON,
+                    success:function(){
+                        console.log("creado");
+                        window.location.href="home.html";
+                    }
+                })
+                })
+            
+        })
+    </script>
+    
+</body>
+</html>

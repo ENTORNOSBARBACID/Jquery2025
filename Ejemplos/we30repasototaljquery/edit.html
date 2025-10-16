@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <form>
         <label>ID:</label>
         <input type="text" id="cajaIDdoctor" readonly><br>
         <label>ID hospital:</label>
@@ -19,8 +18,7 @@
         <input type="text" id="cajaespecialidad"><br>
         <label>Salario</label>
         <input type="text" id="cajasalario"><br>    
-        <button id="gaurdarCambios">Guardar cambios</button>
-   </form>
+        <button id="guardarCambios">Guardar cambios</button>
 
     <script>
         let urlDoctores="https://apicruddoctores.azurewebsites.net/";
@@ -43,16 +41,19 @@
                         }
                     })
 
-                    $("#guardarCambios").click(function(){
+                    
+                }
+            })
+            $("#guardarCambios").click(function(){
+                        requestEdit="api/Doctores"
+                        console.log("hola")
 
-                        requestEdit="/api/Doctores"
+                        var idHospital=$("#cajaIDhospital").val();
+                        var apellido=$("#cajapellido").val();
+                        var especialidad=$("#cajaespecialidad").val();
+                        var salario=$("#cajasalario").val();
 
-                        var idHospital=$("#cajaIDhospital").val(doctor.idHospital);
-                        var apellido=$("#cajapellido").val(doctor.apellido);
-                        var especialidad=$("#cajaespecialidad").val(doctor.especialidad);
-                        var salario=$("#cajasalario").val(doctor.salario);
-
-                        var doctorEdit=new Objets();
+                        var doctorEdit=new Object();
 
                         doctorEdit.idDoctor=Number(idDoctor);
                         doctorEdit.idHospital=Number(idHospital);
@@ -61,21 +62,20 @@
                         doctorEdit.salario=Number(salario);
 
                         var dataJSON=JSON.stringify(doctorEdit);
+                        console.log(dataJSON);
 
                         $.ajax({
-                            url:urlDoctor + requestEdit,
+                            url:urlDoctores + requestEdit,
                             type:"PUT",
                             contentType:"application/json",
-                            dataType:"application/json",
+                            dataType:"json",
                             data:dataJSON,
                             success: function(){
                                 console.log("Doctor editado");
-                                window.location.href="home.html"
+                                window.location.href="home.html";
                             }
                         })
                     })
-                }
-            })
         })
     </script>
     
